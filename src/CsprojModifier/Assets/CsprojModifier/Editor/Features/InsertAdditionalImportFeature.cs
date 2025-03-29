@@ -157,11 +157,11 @@ namespace CsprojModifier.Editor.Features
                     if (target.Position == ImportProjectPosition.Append)
                     {
                         projectE.Add(new XComment($"{target.Path}:{hash}"));
-                        projectE.Add(new XElement("Import", new XAttribute("Project", target.Path)));
+                        projectE.Add(new XElement($"{{{projectNs}}}Import", new XAttribute("Project", target.Path)));
                     }
                     else if (target.Position == ImportProjectPosition.Prepend)
                     {
-                        projectE.AddFirst(new XElement("Import", new XAttribute("Project", target.Path)));
+                        projectE.AddFirst(new XElement($"{{{projectNs}}}Import", new XAttribute("Project", target.Path)));
                         projectE.AddFirst(new XComment($"{target.Path}:{hash}"));
                     }
                     else if (target.Position == ImportProjectPosition.AppendContent)
