@@ -141,16 +141,15 @@ namespace CsprojModifier.Editor.Features
 
             if (settings.AdditionalImports.Any() && canApply)
             {
-
+                const string @namespace = "{http://schemas.microsoft.com/developer/msbuild/2003}";
                 var baseDir = Path.GetDirectoryName(path);
                 var xDoc = XDocument.Parse(content);
-                var projectE = xDoc.Element("Project");
+                var projectE = xDoc.Element($"{@namespace}Project") ?? xDoc.Element("Project");
                 if (projectE == null)
                 {
                     throw new Exception($"Unknown csproj format: {path}");
                 }
                 var projectNs = projectE.GetDefaultNamespace();
-
                 foreach (var target in settings.AdditionalImports)
                 {
                     var hash = string.Concat(SHA256.Create().ComputeHash(File.ReadAllBytes(Path.GetFullPath(Path.Combine(baseDir, target.Path)))).Select(x => x.ToString("x2")));
