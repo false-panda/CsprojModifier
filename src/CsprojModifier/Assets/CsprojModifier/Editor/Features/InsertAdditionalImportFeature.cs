@@ -144,7 +144,7 @@ namespace CsprojModifier.Editor.Features
 
                 var baseDir = Path.GetDirectoryName(path);
                 var xDoc = XDocument.Parse(content);
-                var projectE = xDoc.Element(nsMsbuild + "Project") ?? xDoc.Element("Project");
+                var projectE = xDoc.Element("Project");
                 if (projectE == null)
                 {
                     throw new Exception($"Unknown csproj format: {path}");
