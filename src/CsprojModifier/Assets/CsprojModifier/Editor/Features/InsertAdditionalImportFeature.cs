@@ -144,7 +144,6 @@ namespace CsprojModifier.Editor.Features
 
                 var baseDir = Path.GetDirectoryName(path);
                 var xDoc = XDocument.Parse(content);
-                var nsMsbuild = (XNamespace)"http://schemas.microsoft.com/developer/msbuild/2003";
                 var projectE = xDoc.Element(nsMsbuild + "Project") ?? xDoc.Element("Project");
                 if (projectE == null)
                 {
@@ -159,11 +158,11 @@ namespace CsprojModifier.Editor.Features
                     if (target.Position == ImportProjectPosition.Append)
                     {
                         projectE.Add(new XComment($"{target.Path}:{hash}"));
-                        projectE.Add(new XElement(projectNs + "Import", new XAttribute("Project", target.Path)));
+                        projectE.Add(new XElement("Import", new XAttribute("Project", target.Path)));
                     }
                     else if (target.Position == ImportProjectPosition.Prepend)
                     {
-                        projectE.AddFirst(new XElement(projectNs + "Import", new XAttribute("Project", target.Path)));
+                        projectE.AddFirst(new XElement("Import", new XAttribute("Project", target.Path)));
                         projectE.AddFirst(new XComment($"{target.Path}:{hash}"));
                     }
                     else if (target.Position == ImportProjectPosition.AppendContent)
